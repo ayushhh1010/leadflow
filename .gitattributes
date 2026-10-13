@@ -1,0 +1,9 @@
+# Normalise line endings so formatters and Linux containers behave the same on every OS.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.webm binary
+*.mp4 binary
+*.gif binary
