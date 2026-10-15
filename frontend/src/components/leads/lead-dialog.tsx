@@ -73,9 +73,13 @@ export function LeadDialog({ leadId, initialLead, onClose }: LeadDialogProps) {
 
       {lead?.follow_up_at && <FollowUpBanner lead={lead} at={lead.follow_up_at} now={now} />}
 
+      {/* Focusable so keyboard users can scroll a long history. */}
       <div
         ref={timelineRef}
-        className="min-h-0 flex-1 overflow-y-auto bg-slate-50 px-5 py-5 sm:px-6"
+        role="region"
+        aria-label="Timeline"
+        tabIndex={0}
+        className="min-h-0 flex-1 overflow-y-auto bg-slate-50 px-5 py-5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600 sm:px-6"
       >
         {leadQuery.data ? (
           <Timeline discussions={leadQuery.data.discussions} now={now} />

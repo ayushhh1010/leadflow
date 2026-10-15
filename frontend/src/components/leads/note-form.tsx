@@ -109,7 +109,7 @@ export function NoteForm({ leadId, textareaRef, onSaved }: NoteFormProps) {
             event.currentTarget.form?.requestSubmit();
           }
         }}
-        placeholder="Log a new discussion…"
+        placeholder="Log a new discussion… (Ctrl + Enter to save)"
         aria-invalid={error && !draft.body.trim() ? true : undefined}
         aria-describedby={message ? errorId : undefined}
         className={cn(inputClass, "min-h-20 resize-y")}
@@ -144,14 +144,12 @@ export function NoteForm({ leadId, textareaRef, onSaved }: NoteFormProps) {
             className={cn(inputClass, "h-9 w-auto py-1 max-sm:flex-1")}
           />
         </div>
-        <span className="ml-auto hidden text-xs text-slate-500 md:inline">
-          Ctrl + Enter to save
-        </span>
         <Button
           type="submit"
           variant="dark"
           loading={addDiscussion.isPending}
-          className="max-sm:w-full max-md:ml-auto"
+          aria-keyshortcuts="Control+Enter Meta+Enter"
+          className="ml-auto max-sm:w-full"
         >
           Save note
         </Button>

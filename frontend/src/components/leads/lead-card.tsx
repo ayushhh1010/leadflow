@@ -48,7 +48,7 @@ export function LeadCard({
             {lead.name}
           </button>{" "}
           {lead.company && (
-            <span className="inline-block max-w-full truncate align-bottom text-sm font-normal text-slate-500">
+            <span className="inline-block max-w-full truncate align-bottom text-sm font-normal text-slate-600">
               ({lead.company})
             </span>
           )}
@@ -57,11 +57,11 @@ export function LeadCard({
       </div>
 
       <p className="mt-1 flex min-w-0 items-baseline gap-2 text-sm">
-        <span className={cn("min-w-0 truncate", closed ? "text-slate-500" : "text-slate-600")}>
+        <span className="min-w-0 truncate text-slate-600">
           <span className="font-semibold text-slate-700">Last note:</span>{" "}
           {lead.last_note ?? <span className="italic">No discussions yet</span>}
         </span>
-        <span className="shrink-0 text-xs text-slate-500">
+        <span className="shrink-0 text-xs text-slate-600">
           {lead.last_note_at
             ? timeAgo(lead.last_note_at, now)
             : `Added ${timeAgo(lead.created_at, now)}`}
