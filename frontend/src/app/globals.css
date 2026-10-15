@@ -2,12 +2,30 @@
 
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-dialog-in: dialog-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
 }
 
 :root {
   color-scheme: light;
 }
 
+html {
+  /* Keeps the layout from jumping when a dialog locks scrolling. */
+  scrollbar-gutter: stable;
+}
+
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 body {
-  @apply bg-slate-50 font-sans text-slate-900;
+  @apply min-h-dvh bg-slate-50 font-sans text-slate-900;
 }
