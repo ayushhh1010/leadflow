@@ -15,7 +15,7 @@ permissions:
 jobs:
   backend:
     name: Backend (lint, types, tests on SQLite + PostgreSQL)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     services:
       postgres:
         image: postgres:17-alpine
@@ -29,7 +29,7 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.0
         with:
           version: "0.9.7"
       - run: uv sync --locked
@@ -45,7 +45,7 @@ jobs:
 
   frontend:
     name: Frontend (format, lint, types, unit tests, build)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: frontend
@@ -65,11 +65,11 @@ jobs:
 
   e2e:
     name: End-to-end (Playwright, 5 browsers)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [backend, frontend]
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.0
         with:
           version: "0.9.7"
       - uses: actions/setup-node@v6
@@ -94,7 +94,7 @@ jobs:
 
   docker:
     name: Docker Compose smoke test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - run: cp .env.example .env
