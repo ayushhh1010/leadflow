@@ -2,7 +2,7 @@
 
 A lightweight, single-screen CRM for a sales rep: track leads, log every conversation, and never miss a follow-up.
 
-![LeadFlow lead list with overdue and today's follow-ups pinned to the top](docs/screenshots/01-lead-list.png)
+![LeadFlow walkthrough: filtering and searching leads, logging a discussion with a follow-up that pins the lead to today, changing a status and adding a lead](docs/demo.gif)
 
 **Stack:** Next.js 16 (React 19, TypeScript, Tailwind CSS 4, TanStack Query) · FastAPI (SQLAlchemy 2, Pydantic 2, Alembic) · PostgreSQL 17 (Docker) or SQLite (local) · Playwright, Vitest, pytest · Docker Compose · GitHub Actions
 
@@ -20,7 +20,9 @@ A lightweight, single-screen CRM for a sales rep: track leads, log every convers
 
 ## Demo
 
-▶️ **Walkthrough video (30 s):** [`docs/demo.webm`](docs/demo.webm), recorded by `npm run demo:record`.
+▶️ **Full-quality walkthrough video (33 s):** [`docs/demo.webm`](docs/demo.webm). The animation at the top is a compressed GIF of the same recording. The video and screenshots are produced by `npm run demo:record`; the GIF is converted from the video with ffmpeg (`fps=10,scale=960`, 128-colour palette).
+
+![Lead list with overdue and today's follow-ups pinned to the top](docs/screenshots/01-lead-list.png)
 
 | Timeline dialog | Add a lead |
 | --- | --- |
