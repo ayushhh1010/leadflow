@@ -34,19 +34,34 @@ async function showCursor(page: Page) {
 const pause = (page: Page, ms = 1200) => page.waitForTimeout(ms);
 
 /** Screenshot without the fake cursor in it. */
-async function snap(page: Page, name: string, fullPage = false) {
+async function snap(page: Page, name: string) {
   const cursor = page.locator("#demo-cursor");
   await cursor.evaluate((dot) => (dot.style.visibility = "hidden"));
-  await page.screenshot({ path: shot(name), fullPage });
+  await page.screenshot({ path: shot(name) });
   await cursor.evaluate((dot) => (dot.style.visibility = "visible"));
 }
 
-test("record the LeadFlow walkthrough", async ({ page, browser }) => {
+test("record the LeadFlow walkthrough", async ({ browser }) => {
+  const baseURL = test.info().project.use.baseURL;
+  const desktop = { baseURL, viewport: { width: 1280, height: 800 }, deviceScaleFactor: 2 };
+
+  // Full-page screenshots briefly resize the viewport, so take this one before recording.
+  const still = await browser.newContext(desktop);
+  const listPage = await still.newPage();
+  await listPage.goto("/");
+  await expect(section(listPage, /^all leads/i)).toBeVisible();
+  await listPage.screenshot({ path: shot("01-lead-list"), fullPage: true });
+  await still.close();
+
+  const recording = await browser.newContext({
+    ...desktop,
+    recordVideo: { dir: test.info().outputDir, size: desktop.viewport },
+  });
+  const page = await recording.newPage();
   await showCursor(page);
   await page.goto("/");
   await expect(section(page, /^all leads/i)).toBeVisible();
   await pause(page, 1500);
-  await snap(page, "01-lead-list", true);
 
   // Filters and search.
   await page
@@ -112,13 +127,17 @@ test("record the LeadFlow walkthrough", async ({ page, browser }) => {
   await pause(page, 2000);
 
   const video = page.video();
-  await page.close();
+  await recording.close();
   await video?.saveAs(path.join(DOCS, "demo.webm"));
 
   // Phone-sized screenshots.
-  const phone = await browser.newContext({ ...devices["iPhone 15"], reducedMotion: "reduce" });
+  const phone = await browser.newContext({
+    ...devices["iPhone 15"],
+    baseURL,
+    reducedMotion: "reduce",
+  });
   const mobile = await phone.newPage();
-  await mobile.goto(new URL("/", test.info().project.use.baseURL).toString());
+  await mobile.goto("/");
   await expect(section(mobile, /^all leads/i)).toBeVisible();
   await mobile.screenshot({ path: shot("05-mobile-list") });
   await openLead(mobile, "Ellen Ripley");

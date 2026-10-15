@@ -9,15 +9,6 @@ export default defineConfig({
   testMatch: "demo.spec.ts",
   retries: 0,
   reporter: "list",
-  projects: [
-    {
-      name: "demo",
-      use: {
-        ...devices["Desktop Chrome"],
-        viewport: { width: 1280, height: 800 },
-        deviceScaleFactor: 2,
-        video: { mode: "on", size: { width: 1280, height: 800 } },
-      },
-    },
-  ],
+  // The spec creates its own contexts (screenshot first, then the recording).
+  projects: [{ name: "demo", use: { ...devices["Desktop Chrome"] } }],
 });
