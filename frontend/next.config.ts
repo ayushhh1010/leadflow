@@ -12,7 +12,10 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // The Docker image sets NEXT_OUTPUT=standalone to ship a minimal Node server.
+  output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
+  // End-to-end tests build into their own folder so they never overwrite your build.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   poweredByHeader: false,
   // Don't let `next dev` write AGENTS.md into the project.
   agentRules: false,
